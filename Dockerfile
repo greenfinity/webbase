@@ -36,4 +36,5 @@ ADD /etc/supervisord.conf /etc/supervisor/conf.d/docker-ssh.conf
 ADD /bin/docker-startup /usr/local/bin/docker-startup
 RUN docker-startup
 EXPOSE 22
+EXPOSE 6543
 CMD /usr/bin/supervisord
