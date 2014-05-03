@@ -1,0 +1,9 @@
+#! /bin/sh
+
+mkdir -p /var/run/sshd
+mkdir -p /var/log/supervisor
+
+echo X11Forwarding yes >> /etc/ssh/ssh_config
+
+chown -R root:root /root/
+chsh -s /bin/zsh root

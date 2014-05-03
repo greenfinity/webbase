@@ -1,0 +1,8 @@
+*.pyc
+*.sw?
+.*.sw?
+.DS_Store
+.codeintel
+*.sublime-project
+*.sublime-workspace
+BACKUP*.tgz

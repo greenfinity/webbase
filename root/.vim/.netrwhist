@@ -1,0 +1,11 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =9
+let g:netrw_dirhist_1='/Users/ree/work/osi/karl/7/src/karl/karl/views/static'
+let g:netrw_dirhist_2='/Users/ree/work/osi/karl/7/src/karl/karl/views/static/ux2'
+let g:netrw_dirhist_3='/Users/ree/work/osi/karl/7/src/karl/karl/views/static/ux2/plugins'
+let g:netrw_dirhist_4='/Users/ree/work/osi/karl/7/src/karl/karl/views/static/ux2/plugins/karl-searchbox'
+let g:netrw_dirhist_5='/Users/ree/work/osi/karl/7/src/karl/karl/views/static/ux2/plugins'
+let g:netrw_dirhist_6='/Users/ree/work/osi/karl/7/src/karl/karl/views/static/ux2/plugins/popper-gridbox'
+let g:netrw_dirhist_7='/Users/ree/work/substanced/sdidev/1/src/substanced'
+let g:netrw_dirhist_8='/Users/ree/work/substanced/sdidev/2/substanced/sdi/static'
+let g:netrw_dirhist_9='/Users/ree/Library/Application Support/Tunnelblick/Configurations/openvpn.tblk'
