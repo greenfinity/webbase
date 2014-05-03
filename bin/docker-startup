@@ -7,3 +7,9 @@ echo X11Forwarding yes >> /etc/ssh/ssh_config
 
 chown -R root:root /root/
 chsh -s /bin/zsh root
+
+adduser --disabled-password \
+    --shell /bin/zsh \
+     --gecos "First Last,RoomNumber,WorkPhone,HomePhone" \
+    docker
+chown -R docker:docker /home/

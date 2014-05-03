@@ -33,6 +33,7 @@ RUN apt-get install -y \
     libgif-dev build-essential g++
 
 ADD /root /root
+ADD /root /etc/skel
 ADD /etc/supervisord.conf /etc/supervisor/conf.d/docker-ssh.conf
 ADD /bin/docker-startup /usr/local/bin/docker-startup
 RUN docker-startup
