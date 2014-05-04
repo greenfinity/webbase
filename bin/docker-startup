@@ -10,6 +10,6 @@ chsh -s /bin/zsh root
 
 adduser --disabled-password \
     --shell /bin/zsh \
-     --gecos "First Last,RoomNumber,WorkPhone,HomePhone" \
+    --gecos "First Last,RoomNumber,WorkPhone,HomePhone" \
     docker
 chown -R docker:docker /home/
