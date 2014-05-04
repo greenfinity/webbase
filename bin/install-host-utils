@@ -21,6 +21,11 @@ cat > ~/.ssh/docker-ssh <<END
 import sys
 import subprocess
 import json
+import os
+
+# env var is needed in some cases
+env = os.environ.copy()
+env['DOCKER_HOST'] = 'tcp://localhost:4243'
 
 # separate username if specified
 splitname = sys.argv[1].split('@', 2)
@@ -31,7 +36,11 @@ else:
 # use only the first domain name segment as the container name
 name = host.split('.', 2)[0]
 cmd = '/usr/local/bin/docker inspect {}'.format(name)
-output = subprocess.check_output(cmd, shell=True).decode('utf-8')
+output = subprocess.check_output(
+    cmd,
+    shell=True,
+    env=env,
+).decode('utf-8')
 data = json.loads(output)
 
 port = data[0]['NetworkSettings']['Ports']['22/tcp'][0]['HostPort']

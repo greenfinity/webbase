@@ -32,6 +32,7 @@ RUN apt-get install -y \
     libcairo2-dev libjpeg8-dev libpango1.0-dev \
     libgif-dev build-essential g++
 RUN npm install -g grunt-cli
+RUN pip install virtualenv
 
 ADD /homeskel /root
 ADD /homeskel /etc/skel
