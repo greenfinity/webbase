@@ -17,7 +17,6 @@
 FROM ubuntu:12.04
 MAINTAINER Balazs Ree <ree@greenfinity.hu>
 WORKDIR /root
-VOLUME /approot
 
 # RUN echo "deb http://archive.ubuntu.com/ubuntu/ precise main universe" >> /etc/apt/sources.list
 RUN apt-get update
