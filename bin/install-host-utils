@@ -13,7 +13,7 @@ END
 fi
 chmod 600 ~/.ssh/config
 
-cat >> ~/.ssh/docker-ssh <<END
+cat > ~/.ssh/docker-ssh <<END
 #!/usr/bin/env python
 
 # started from http://geraldkaszuba.com/quickly-ssh-into-a-docker-container/
@@ -36,11 +36,12 @@ data = json.loads(output)
 
 port = data[0]['NetworkSettings']['Ports']['22/tcp'][0]['HostPort']
 
-cmd = '''ssh -o UserKnownHostsFile=/dev/null \
-         -o StrictHostKeyChecking=no \
-         {}@localhost \
-         -p {} \
-         {} \
+cmd = '''\\
+    ssh -o UserKnownHostsFile=/dev/null \\
+        -o StrictHostKeyChecking=no \\
+        {}@localhost \\
+        -p {} \\
+        {} \\
 '''.format(user, port, ' '.join(sys.argv[2:]))
 subprocess.call(cmd, shell=True)
 END
