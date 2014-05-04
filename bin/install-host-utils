@@ -1,0 +1,50 @@
+#! /bin/sh
+
+MARKER="## docker-host-utils ##"
+if ! grep -q "$MARKER" ~/.ssh/config; then
+    cat >> ~/.ssh/config <<END
+$MARKER
+Host *.docker
+    User docker
+    UserKnownHostsFile /dev/null
+    StrictHostKeyChecking no
+    ProxyCommand ~/.ssh/docker-ssh %h nc localhost %p
+END
+fi
+chmod 600 ~/.ssh/config
+
+cat >> ~/.ssh/docker-ssh <<END
+#!/usr/bin/env python
+
+# started from http://geraldkaszuba.com/quickly-ssh-into-a-docker-container/
+
+import sys
+import subprocess
+import json
+
+# separate username if specified
+splitname = sys.argv[1].split('@', 2)
+if len(splitname) == 2:
+    user, host = splitname
+else:
+    user, host = 'docker', splitname[0]
+# use only the first domain name segment as the container name
+name = host.split('.', 2)[0]
+cmd = 'docker inspect {}'.format(name)
+output = subprocess.check_output(cmd, shell=True).decode('utf-8')
+data = json.loads(output)
+
+port = data[0]['NetworkSettings']['Ports']['22/tcp'][0]['HostPort']
+
+cmd = '''ssh -o UserKnownHostsFile=/dev/null \
+         -o StrictHostKeyChecking=no \
+         {}@localhost \
+         -p {} \
+         {} \
+'''.format(user, port, ' '.join(sys.argv[2:]))
+subprocess.call(cmd, shell=True)
+END
+chmod 700 ~/.ssh/docker-ssh
+
+echo Finished installing docker host utils.
+echo You can now \"ssh containername.docker\".
