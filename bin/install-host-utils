@@ -30,7 +30,7 @@ else:
     user, host = 'docker', splitname[0]
 # use only the first domain name segment as the container name
 name = host.split('.', 2)[0]
-cmd = 'docker inspect {}'.format(name)
+cmd = '/usr/local/sbin/docker inspect {}'.format(name)
 output = subprocess.check_output(cmd, shell=True).decode('utf-8')
 data = json.loads(output)
 

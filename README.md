@@ -15,6 +15,7 @@ Based on Ubuntu LTS (precise)
 
 NodeJS is essential for any front-end building task.
 You probably want to use Grunt, Gulp or a similar build tool.
+`grunt-cli` is installed globally.
 
 - node0.10
 

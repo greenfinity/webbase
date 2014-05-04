@@ -3,8 +3,11 @@
 mkdir -p /var/run/sshd
 mkdir -p /var/log/supervisor
 
-echo X11Forwarding yes >> /etc/ssh/ssh_config
-
+cat >> /etc/ssh/ssh_config <<END
+    ForwardAgent yes 
+    ForwardX11 yes
+    StrictHostKeyChecking no
+END
 chown -R root:root /root/
 chsh -s /bin/zsh root
 

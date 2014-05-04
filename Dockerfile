@@ -31,6 +31,7 @@ RUN apt-get install -y \
     nodejs \
     libcairo2-dev libjpeg8-dev libpango1.0-dev \
     libgif-dev build-essential g++
+RUN npm install -g grunt-cli
 
 ADD /homeskel /root
 ADD /homeskel /etc/skel
