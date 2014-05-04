@@ -48,4 +48,4 @@ END
 chmod 700 ~/.ssh/docker-ssh
 
 echo Finished installing docker host utils.
-echo You can now \"ssh containername.docker\".
+echo Now you can \"ssh containername.docker\".
