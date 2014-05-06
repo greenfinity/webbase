@@ -8,7 +8,9 @@ Host *.docker
     User docker
     UserKnownHostsFile /dev/null
     StrictHostKeyChecking no
-    ProxyCommand ~/.ssh/docker-ssh %h nc localhost %p
+    ForwardAgent yes
+    ForwardX11 yes
+    ProxyCommand ~/.ssh/docker-ssh --netcat %h
 END
 fi
 chmod 600 ~/.ssh/config
@@ -23,38 +25,53 @@ import subprocess
 import json
 import os
 
-# env var is needed in some cases
-env = os.environ.copy()
-env['DOCKER_HOST'] = 'tcp://localhost:4243'
 
-# separate username if specified
-splitname = sys.argv[1].split('@', 2)
-if len(splitname) == 2:
-    user, host = splitname
-else:
-    user, host = 'docker', splitname[0]
-# use only the first domain name segment as the container name
-name = host.split('.', 2)[0]
-cmd = '/usr/local/bin/docker inspect {}'.format(name)
-output = subprocess.check_output(
-    cmd,
-    shell=True,
-    env=env,
-).decode('utf-8')
-data = json.loads(output)
+def main(args):
 
-port = data[0]['NetworkSettings']['Ports']['22/tcp'][0]['HostPort']
+    # env var is needed in some cases
+    env = os.environ.copy()
+    env['DOCKER_HOST'] = 'tcp://localhost:4243'
 
-cmd = '''\\
-    ssh -o UserKnownHostsFile=/dev/null \\
-        -o StrictHostKeyChecking=no \\
-        {}@localhost \\
-        -p {} \\
-        {} \\
-'''.format(user, port, ' '.join(sys.argv[2:]))
-subprocess.call(cmd, shell=True)
+    # check --netcat
+    netcat = args[0] == '--netcat'
+    if netcat:
+        args = args[1:]
+
+    # separate username if specified
+    splitname = args[0].split('@', 2)
+    if len(splitname) == 2:
+        user, host = splitname
+    else:
+        user, host = 'docker', splitname[0]
+    # use only the first domain name segment as the container name
+    name = host.split('.', 2)[0]
+    cmd = '/usr/local/bin/docker inspect {}'.format(name)
+    output = subprocess.check_output(
+        cmd,
+        shell=True,
+        env=env,
+    ).decode('utf-8')
+    data = json.loads(output)
+
+    port = data[0]['NetworkSettings']['Ports']['22/tcp'][0]['HostPort']
+
+    cmd = '''\
+        ssh -o UserKnownHostsFile=/dev/null \
+            -o StrictHostKeyChecking=no \
+            {}@127.0.0.1 \
+            -p {} \
+            {} \
+    '''.format(user, port, ' '.join(args[1:]))
+    if netcat:
+        cmd += '''\
+            nc 127.0.0.1 22 \
+            '''.format(port)
+    subprocess.call(cmd, shell=True)
+
+if __name__ == '__main__':
+    main(sys.argv[1:])
 END
 chmod 700 ~/.ssh/docker-ssh
 
 echo Finished installing docker host utils.
-echo Now you can \"ssh containername.docker\".
+echo Now you can do \"ssh containername.docker\".

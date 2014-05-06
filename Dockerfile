@@ -25,7 +25,7 @@ RUN add-apt-repository ppa:chris-lea/node.js
 RUN apt-get update
 RUN apt-get install -y \
     tar git curl wget dialog net-tools netcat build-essential \
-    zsh vim openssh-server supervisor \
+    zsh vim openssh-server supervisor rsync \
     sudo screen htop \
     python3-dev python-virtualenv \
     nodejs \
