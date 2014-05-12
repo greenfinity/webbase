@@ -43,7 +43,8 @@ autoload run-help
 # zsh-git-status
 # --
 source ~/.zsh/git-prompt/zshrc.sh
-PROMPT='%m:%{$bold_color$fg[blue]%}%~%{$reset_color%}$(git_super_status)%{$bold_color$fg[red]%}%#%{$reset_color%} '
+##PROMPT='%m:%{$bold_color$fg[blue]%}%~%{$reset_color%}$(git_super_status)%{$bold_color$fg[red]%}%#%{$reset_color%} '
+PROMPT='%m:%{$bold_color$fg[blue]%}%~%{$reset_color%}%{$bold_color$fg[red]%}%#%{$reset_color%} '
 
 
 HISTSIZE=20000
