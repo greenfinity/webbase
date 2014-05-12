@@ -3,7 +3,7 @@
 ############################################################
 # Dockerfile to build Python WSGI Application Containers
 # 
-# Based on Ubuntu LTS (precise)
+# Based on Ubuntu LTS (trusty)
 #
 # - python2.7
 # - python3.4
@@ -14,23 +14,22 @@
 #
 ############################################################
 
-FROM ubuntu:12.04
+FROM ubuntu:14.04
 MAINTAINER Balazs Ree <ree@greenfinity.hu>
 WORKDIR /root
 
-# RUN echo "deb http://archive.ubuntu.com/ubuntu/ precise main universe" >> /etc/apt/sources.list
-RUN apt-get update
-RUN apt-get install -y python-software-properties
-RUN add-apt-repository ppa:chris-lea/node.js
 RUN apt-get update
 RUN apt-get install -y \
+    software-properties-common python-software-properties \
     tar git curl wget dialog net-tools netcat build-essential \
     zsh vim openssh-server supervisor rsync \
     sudo screen htop \
     python3-dev python-virtualenv \
-    nodejs \
     libcairo2-dev libjpeg8-dev libpango1.0-dev \
     libgif-dev build-essential g++
+RUN add-apt-repository ppa:chris-lea/node.js
+RUN apt-get update
+RUN apt-get install -y nodejs
 RUN npm install -g grunt-cli
 RUN pip install virtualenv
 
